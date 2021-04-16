@@ -1,5 +1,5 @@
 
-import { useContext, useState, createContext } from 'react';
+import { useReducer } from 'react';
 import './App.css';
 
 const globalState = {
@@ -8,53 +8,42 @@ const globalState = {
   counter: 0,
 };
 
+const reducer = (state, action) => {
+  // eslint-disable-next-line default-case
+  switch(action.type){
+     case 'muda': {
+       console.log('chamou muda com', action.payload);
+       return {...state, title: action.payload};
+     }
 
-const GlobalContext = createContext();
-
-const Div = ({children}) => {
-  return (
-    <>
-      <H1 />
-      <P />
-    </>
-  );
+  }
 };
 
-//eslint-disable-next-line
-const H1 = () => {
-  const theContext = useContext(GlobalContext);
-  const {
-    contextState: {title, counter},
-  } = theContext;
-
-  return (
-    <h1>
-      {title}{counter}
-    </h1>
-  );
-};
-
-
-const P = () => {
-  const theContext = useContext(GlobalContext);
-  const {
-    contextState: {body, counter},
-    setContextState,
-  } =theContext;
-
-  return(
-    <p onClick={() => setContextState((s)=>({...s,counter: s.counter +1 }))}>
-      {body}{counter}
-    </p>
-  );
-}
 
 function App() {
-  const [contextState, setContextState] = useState(globalState);
-  return (
-    <GlobalContext.Provider value={{contextState, setContextState}}>
-      <Div />
-    </GlobalContext.Provider>
+  const[state, dispatch]= useReducer(reducer, globalState);
+  const { counter, title, body} = state;
+
+  return(
+    <div>
+      <h1>
+        {title} {counter}
+      </h1>
+      <button
+        onClick={() =>
+          dispatch({
+            type: 'muda',
+            payload: new Date().toLocaleString('pt-BR'),
+          })
+        }
+      >
+        Click
+      </button>
+      <button onClick={() => dispatch({ type: 'inverter' })}>Invert</button>
+      <button onClick={() => dispatch({ type: 'QUALQUERCOiSA' })}>
+        SEM ACTION
+      </button>
+    </div>
   );
 }
 
