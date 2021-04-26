@@ -2,6 +2,12 @@
 
 - useReducer 
  <img alt="code" title="code" src="useReducer.png" />
+ 
+ a função reduce só é disparado quando ela é chamada com <strog>Dispatch<strong> que vai acionar qual tipo(type) da ação.
+ <img alt="code" title="code" src="useReducer-3.png" />
+ 
+ 
+ 
 
 
 
