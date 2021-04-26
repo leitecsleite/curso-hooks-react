@@ -3,7 +3,7 @@
 - useReducer 
  <img alt="code" title="code" src="useReducer.png" />
  
- a função reduce só é disparado quando ela é chamada com Dispatch que vai acionar o parametro Action (ação)</br>
+ A função reducer só é disparado quando ela é chamada com Dispatch que vai acionar o parametro Action (ação)</br>
  state(objeto recebido em forma de parametro)  action(ação a ser realizada); 
  
  <img alt="code" title="code" src="useReducer-3.png" />
