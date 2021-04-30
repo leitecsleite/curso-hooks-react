@@ -1,50 +1,50 @@
 
-import { useReducer } from 'react';
-import './App.css';
+import { useEffect, useState, useRef} from 'react';
 
-const globalState = {
-  title: ' o titulo que contexto',
-  body: 'O body do contexto',
-  counter: 0,
-};
+const useMyHook = (cb, delay=1000 ) =>{
+  const savedCb = useRef();
 
-const reducer = (state, action) => {
-  // eslint-disable-next-line default-case
-  switch(action.type){
-     case 'muda': {
-       console.log('chamou muda com', action.payload);
-       return {...state, title: action.payload};
-     }
+  useEffect(() => {
+      savedCb.current = cb;
+  }, [cb]);
 
-  }
-};
+  useEffect (() => {
+    const interval = setInterval(() => {
+      savedCb.current();
+    }, delay)
 
+    return () => clearInterval(interval);
+}, [delay] );
 
-function App() {
-  const[state, dispatch]= useReducer(reducer, globalState);
-  const { counter, title, body} = state;
+}
+function App(){
+  const [counter, setCounter] = useState(0);
+  const [delay, setDelay] = useState(1000);
+  const [incrementor, setIncrementor] = useState(100);
+
+  useMyHook (() => setCounter((c) => c + 1));
 
   return(
     <div>
-      <h1>
-        {title} {counter}
-      </h1>
+      <h1>Contador:{counter}</h1>
+      <h1>Delay: {delay}</h1>
       <button
-        onClick={() =>
-          dispatch({
-            type: 'muda',
-            payload: new Date().toLocaleString('pt-BR'),
-          })
-        }
-      >
-        Click
-      </button>
-      <button onClick={() => dispatch({ type: 'inverter' })}>Invert</button>
-      <button onClick={() => dispatch({ type: 'QUALQUERCOiSA' })}>
-        SEM ACTION
-      </button>
+        onClick = {() => {
+        setDelay((d) => d - incrementor)}}>
+        - {incrementor}
+     </button>
+
+     <button
+        onClick = {() => {
+        setDelay((d) => d  + incrementor)}}>
+        + {incrementor}
+       </button>
+
+
+     <br/>
+      <input type= "number" value={incrementor} onChange={(e)=> setIncrementor(Number(e.target.value))}/>
     </div>
-  );
+  )
 }
 
 export default App;
