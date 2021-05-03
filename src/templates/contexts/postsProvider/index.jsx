@@ -15,5 +15,5 @@ export const PostsProvider = ({children}) =>{
 
 
 PostsProvider.propTypes = {
-    children: p.element.isRequired,
+    children: p.node.isRequired,
 }
