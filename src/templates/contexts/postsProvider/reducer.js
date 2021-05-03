@@ -6,6 +6,7 @@ export const reducer = (state, action) => {
    switch (action.type){
        case types.POSTS_SUCESS: {
            console.log(action.type);
+           //action.payload = está recebendo os objetos 
            return {...state, posts: action.payload, loading: false};
         }
          case types.POSTS_LOADING: {
